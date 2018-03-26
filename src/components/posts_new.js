@@ -20,6 +20,7 @@ class PostsNew extends Component {
   }
 
     render() {
+        // console.log('this.props', this.props);
         const { fields: { title,categories,content }, handleSubmit } = this.props;
 
 
