@@ -5,6 +5,10 @@ import { Link } from 'react-router';
 
 
 class PostsNew extends Component {
+
+  // following lines is for getting the router
+  // from one of the above components, wherever it is.
+  // You need to import PropTypes.
   static contextTypes = {
     router: PropTypes.object
   };
@@ -22,7 +26,9 @@ class PostsNew extends Component {
     render() {
         // console.log('this.props', this.props);
         const { fields: { title,categories,content }, handleSubmit } = this.props;
-
+        // above line is shorthand form for the followings:
+        // const handleSubmit = this.props.handleSubmit;
+        // const { title, categories, content } = this.props.fields;
 
         return (
           <form onSubmit={handleSubmit(this.onSubmit.bind(this))}>
@@ -52,7 +58,7 @@ class PostsNew extends Component {
               </div>
             </div>
 
-            <button type="submit" className="btn btn-primary" >Submit</button>
+            <button type="submit" className="btn btn-primary">Submit</button>
             <Link to="/" className="btn btn-danger">Cancel</Link>
 
           </form>
@@ -66,21 +72,15 @@ function validate(values){
     const errors = {};
 
     if(!values.title) {
-
         errors.title = 'Enter a username';
-
     }
 
     if(!values.categories) {
-
       errors.categories = 'Enter categories';
-
     }
 
     if(!values.content) {
-
       errors.content = 'Enter some content';
-
     }
 
     return errors;
@@ -88,12 +88,30 @@ function validate(values){
 
 
 
-
+// connect and reduxForm is similar.
 // connect is (mapStateToProps, mapDispatchToProps)
 // reduxForm is (formConfig, mapStateToProps, mapDispatchToProps)
+
+// { createPost } is shorhand form for mapDispatchToProps function 
+// see posts_index.js
 
 export default reduxForm({
     form: 'PostsNewForm',
     fields: ['title', 'categories', 'content'],
     validate
 }, null, { createPost } )(PostsNew);
+
+
+
+// user types something in....record it on application state
+// juxtapose this how it is done without redux-form and  
+// setting local state and back to input by value property
+/* state === {
+  form: {
+    PostsNewForm: {
+      title: '...',
+      categories: '...',
+      content: '...'
+    }
+  }
+} */
